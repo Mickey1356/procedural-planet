@@ -10,6 +10,18 @@ This is procedural planet generator written entirely in C++. It makes use of lib
 
 Inspired by Sebastian Lague's [Solar System Coding Adventures](https://www.youtube.com/playlist?list=PLFt_AvWsXl0cSy8fQu3cFycsOzNjF31M1).
 
+## Instructions
+
+The executable is located in `submission/release` and must be run in the same folder.
+
+Move the camera around using WASD. Space to fly up, and Left Shift to fly down.
+
+Render in wireframe mode (Z) or fill mode (X).
+
+Capture the mouse for first-person look-around (C) and release it (V).
+
+Turn on post-processing effects (P) and turn it off (O).
+
 ## Compiling
 The project has a single dependency: [cmake](https://cmake.org/download/). The other dependencies can be found in the `deps` folder.
 
