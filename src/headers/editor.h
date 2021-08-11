@@ -35,11 +35,39 @@ void show_editor(Planet &planet, Camera &camera, Light &light, float dt, bool &p
         camera.set(speed, sens, scroll_sens, near, far);
     }
 
+    if (ImGui::CollapsingHeader("Lighting")) {
+        ImGui::Text("Light position");
+
+        if (light.orbiting) {
+            ImGui::Text("Time of day on");
+        } else {
+            ImGui::Text("Time of day off");
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Toggle time of day")) {
+            light.orbiting = !light.orbiting;
+        }
+
+        if (ImGui::SliderFloat3("Light position", (float *)&light.position, -100, 100)) {
+            light.set_position(light.position);
+        }
+        ImGui::SliderFloat3("Orbit around", (float *)&light.orbit_around, -100, 100);
+        ImGui::SliderFloat("Orbit distance", &light.orbit_distance, 0, 100);
+        ImGui::SliderFloat("Orbit period", &light.orbit_period, 0, 60);
+
+        ImGui::Text("Light colour");
+        ImGui::ColorEdit3("Light ambient", (float *)&light.ambient);
+        if (ImGui::ColorEdit3("Light diffuse", (float *)&light.diffuse)) {
+            light.set_colour(light.diffuse);
+        }
+        ImGui::ColorEdit3("Light specular", (float *)&light.specular);
+    }
+
     if (ImGui::CollapsingHeader("Cubesphere")) {
         static int n_segments = planet.get_segments();
         static bool project = planet.get_project();
         static float radius = planet.get_radius();
-        if (ImGui::SliderInt("Segments", &n_segments, 1, 1024)) {
+        if (ImGui::SliderInt("Segments", &n_segments, 1, 512)) {
             planet.set_squares(n_segments);
         }
         if (ImGui::SliderFloat("Radius", &radius, 1, 100)) {
@@ -61,7 +89,10 @@ void show_editor(Planet &planet, Camera &camera, Light &light, float dt, bool &p
         ImGui::SliderFloat("Scale", &planet.noise_params.x, 0, 2);
         ImGui::SliderFloat("Persistence", &planet.noise_params.y, 0, 2);
         ImGui::SliderFloat("Lacunarity", &planet.noise_params.z, 0, 5);
+
+        ImGui::Text("Normals");
         ImGui::SliderFloat("Normal delta", &planet.noise_params.w, 0.00001f, 0.1f, "%.5f");
+        ImGui::SliderFloat("Normal strength", &planet.normal_map_str, 0, 1);
 
         ImGui::Text("Ocean floor parameters");
         ImGui::SliderFloat("Ocean depth", &planet.ocean_params.x, 0, 1);
@@ -117,34 +148,6 @@ void show_editor(Planet &planet, Camera &camera, Light &light, float dt, bool &p
         ImGui::SliderFloat("Red wavelength (nm)", &planet.rgb_wavelengths.x, 0, 1000);
         ImGui::SliderFloat("Green wavelength (nm)", &planet.rgb_wavelengths.y, 0, 1000);
         ImGui::SliderFloat("Blue wavelength (nm)", &planet.rgb_wavelengths.z, 0, 1000);
-    }
-
-    if (ImGui::CollapsingHeader("Lighting")) {
-        ImGui::Text("Light position");
-
-        if (light.orbiting) {
-            ImGui::Text("Time of day on");
-        } else {
-            ImGui::Text("Time of day off");
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Toggle time of day")) {
-            light.orbiting = !light.orbiting;
-        }
-
-        if (ImGui::SliderFloat3("Light position", (float *)&light.position, -100, 100)) {
-            light.set_position(light.position);
-        }
-        ImGui::SliderFloat3("Orbit around", (float *)&light.orbit_around, -100, 100);
-        ImGui::SliderFloat("Orbit distance", &light.orbit_distance, 0, 100);
-        ImGui::SliderFloat("Orbit period", &light.orbit_period, 0, 60);
-
-        ImGui::Text("Light colour");
-        ImGui::ColorEdit3("Light ambient", (float *)&light.ambient);
-        if (ImGui::ColorEdit3("Light diffuse", (float *)&light.diffuse)) {
-            light.set_colour(light.diffuse);
-        }
-        ImGui::ColorEdit3("Light specular", (float *)&light.specular);
     }
 
     if (ImGui::CollapsingHeader("Clouds")) {

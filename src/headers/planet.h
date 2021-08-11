@@ -20,6 +20,7 @@ public:
     glm::vec3 offset = glm::vec3(0);
     int octaves = 11;
     glm::vec4 noise_params = glm::vec4(1, 0.5f, 2, 0.01f);
+    float normal_map_str = 1;
 
     // ocean floor
     glm::vec3 ocean_params = glm::vec3(0.5f, 0.05f, 3.2f);

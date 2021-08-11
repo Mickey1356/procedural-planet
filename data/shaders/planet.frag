@@ -20,6 +20,8 @@ uniform vec4 colour_params;
 uniform vec4 colour_params2;
 uniform vec2 seafloor_params;
 
+uniform float normal_map_str;
+
 struct Light {
     vec3 position;
     vec3 ambient;
@@ -126,6 +128,7 @@ void main() {
     
     // use the vertex normal
     // vec3 norm = normalize(tinv_mdl * normal);
+    norm = mix(nn, norm, normal_map_str);
 
     // phong lighting
     vec3 ambient = light.ambient;

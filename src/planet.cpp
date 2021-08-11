@@ -35,6 +35,7 @@ void Planet::draw(const glm::mat4 &vp, const glm::vec3 &cam_pos, const Light lig
         planet_shader.set_int("octaves", octaves);
         planet_shader.set_vector4("noise_params", noise_params);
         planet_shader.set_vector3("ocean_params", ocean_params);
+        planet_shader.set_float("normal_map_str", normal_map_str);
 
         // terrain colours
         planet_shader.set_vector3("grass_colour", grass_colour);
