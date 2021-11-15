@@ -80,8 +80,8 @@ glm::vec3 Planet::get_radii() {
 }
 
 glm::vec3 Planet::get_scatter() {
-    float r = pow(400 / rgb_wavelengths.x, 4);
-    float g = pow(400 / rgb_wavelengths.y, 4);
-    float b = pow(400 / rgb_wavelengths.z, 4);
+    float r = (float) pow(400 / rgb_wavelengths.x, 4);
+    float g = (float) pow(400 / rgb_wavelengths.y, 4);
+    float b = (float) pow(400 / rgb_wavelengths.z, 4);
     return scatter_str * glm::vec3(r, g, b);
 }
